@@ -17,7 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->integer('group_id')->unsigned()->nullable();
             $table->timestamps();
+            $table->foreign('group_id','students_fk0')->references('id')->on('groups')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
         });
     }
 
