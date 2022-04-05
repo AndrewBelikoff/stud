@@ -18,8 +18,7 @@ class StudentSeeder extends Seeder
     {
         Student::factory(10)->create()
             ->each(function ($student) {
-                $lectures = Plan::where('group_id', $student['group_id'])->pluck('lecture_id')->toArray();
-                foreach ($lectures as $lecture) {
+                foreach ($student->lectures->pluck('id') as $lecture) {
                     Study::updateOrCreate(
                         [
                         'student_id' => $student['id'],

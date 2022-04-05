@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Lecture extends Model
 {
@@ -24,10 +25,10 @@ class Lecture extends Model
     ];
 
     /**
-     * Клиники пользователя.
+     * Учебные планы
      */
-    public function clinics(): BelongsTo
+    public function plans(): HasMany
     {
-        return $this->belongsTo(Group::class, 'user_id', 'clinic_id');
+        return $this->hasMany(Lecture::class, 'id');
     }
 }
