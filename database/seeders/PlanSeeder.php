@@ -5,8 +5,8 @@ namespace Database\Seeders;
 use App\Models\Group;
 use App\Models\Lecture;
 use App\Models\Plan;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Arr;
 
 class PlanSeeder extends Seeder
 {
@@ -23,18 +23,15 @@ class PlanSeeder extends Seeder
         $this->groups = Group::get('id')->all();
         $this->lectures= Lecture::get('id')->all();
 
-        foreach ($this->groups as $group){
-            if (rand(0,4)>0){
-                foreach ($this->lectures as $lecture){
-                    if(rand(0,4)>1){
-                        Plan::updateOrCreate(
-                            [
-                                'group_id' => $group['id'],
-                                'lecture_id' => $lecture['id'],
-
-                            ]);
-
-                    }
+        foreach ($this->groups as $group) {
+            foreach (Arr::shuffle($this->lectures) as $lecture) {
+                if (rand(0, 4)>1) {
+                    Plan::updateOrCreate(
+                        [
+                            'group_id' => $group['id'],
+                            'lecture_id' => $lecture['id'],
+                        ]
+                    );
                 }
             }
         }

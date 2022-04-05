@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class () extends Migration {
     /**
      * Run the migrations.
      *
@@ -13,15 +12,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('plans', function (Blueprint $table) {
+        Schema::create('studies', function (Blueprint $table) {
             $table->id();
-            $table->integer('group_id')->unsigned();
+            $table->integer('student_id')->unsigned();
             $table->integer('lecture_id')->unsigned();
+            $table->boolean('is_completed')->default(false);
             $table->timestamps();
-            $table->foreign('group_id', 'plans_fk0')->references('id')->on('groups')
+            $table->foreign('student_id', 'study_fk0')->references('id')->on('students')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreign('lecture_id', 'plans_fk1')->references('id')->on('lectures')
+            $table->foreign('lecture_id', 'study_fk1')->references('id')->on('lectures')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plans');
+        Schema::dropIfExists('studies');
     }
 };

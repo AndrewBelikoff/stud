@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Plan;
 use App\Models\Student;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Study;
 use Illuminate\Database\Seeder;
 
 class StudentSeeder extends Seeder
@@ -15,6 +16,20 @@ class StudentSeeder extends Seeder
      */
     public function run()
     {
-        Student::factory(5)->create();
+        Student::factory(10)->create()
+            ->each(function ($student) {
+                $lectures = Plan::where('group_id', $student['group_id'])->pluck('lecture_id')->toArray();
+                foreach ($lectures as $lecture) {
+                    Study::updateOrCreate(
+                        [
+                        'student_id' => $student['id'],
+                        'lecture_id' => $lecture,
+                        ],
+                        [
+                        'is_completed' => 0
+                    ]
+                    );
+                }
+            });
     }
 }

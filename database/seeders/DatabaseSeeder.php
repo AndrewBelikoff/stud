@@ -19,8 +19,9 @@ class DatabaseSeeder extends Seeder
 
         GroupSeeder::class,
         LectureSeeder::class,
+            PlanSeeder::class,
         StudentSeeder::class,
-        PlanSeeder::class
+
         ]);
     }
 }
