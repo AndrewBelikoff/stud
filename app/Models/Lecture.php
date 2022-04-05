@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Lecture extends Model
 {
@@ -27,6 +28,6 @@ class Lecture extends Model
      */
     public function clinics(): BelongsTo
     {
-        return $this->belongsTo(Group::class,  'user_id', 'clinic_id');
+        return $this->belongsTo(Group::class, 'user_id', 'clinic_id');
     }
 }

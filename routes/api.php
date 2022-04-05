@@ -21,8 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/{i}', function ($i) {
     return 'bl ' . $i;
 });
-Route::prefix('student')->group(function()
-{
+Route::prefix('student')->group(function () {
     Route::get('/all', function () {
         return '1) получить список всех студентов';
     });
@@ -40,8 +39,7 @@ Route::prefix('student')->group(function()
     });
 });
 
-Route::prefix('class')->group(function()
-{
+Route::prefix('class')->group(function () {
     Route::get('/all', function () {
         return '6) получить список всех классов';
     });
@@ -59,8 +57,7 @@ Route::prefix('class')->group(function()
     });
 });
 
-Route::prefix('plan')->group(function()
-{
+Route::prefix('plan')->group(function () {
     Route::get('/class/{c}', function ($c) {
         return '8) получить учебный план (список лекций) для конкретного класса ' . $c;
     });
@@ -69,8 +66,7 @@ Route::prefix('plan')->group(function()
     });
 });
 
-Route::prefix('lecture')->group(function()
-{
+Route::prefix('lecture')->group(function () {
     Route::get('/all', function () {
         return '13) получить список всех лекций';
     });
@@ -84,4 +80,3 @@ Route::prefix('lecture')->group(function()
         return '16) обновить лекцию (тема, описание)' . $l;
     });
 });
-

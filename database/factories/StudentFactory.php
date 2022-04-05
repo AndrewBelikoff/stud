@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Group;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Arr;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Student>
@@ -20,7 +21,7 @@ class StudentFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->email(),
-            'group_id' =>  rand(0, Group::count()),
+            'group_id' =>  (rand(0,2)>0)? Arr::random(Group::get('id')->all()):null,
         ];
     }
 }

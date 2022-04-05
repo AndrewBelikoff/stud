@@ -5,25 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Student extends Model
+class Plan extends Model
 {
     use HasFactory;
-
-    protected $table = 'students';
-
-    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
+    protected $table = 'plans';
     protected $fillable = [
-        'nm',
-        'email'
-        ];
+        'group_id',
+        'lecture_id'
+    ];
 
     /**
      * Группа пользователя.
@@ -31,5 +27,13 @@ class Student extends Model
     public function groups(): BelongsTo
     {
         return $this->belongsTo(Group::class, 'id');
+    }
+
+    /**
+     * Группа пользователя.
+     */
+    public function lectures(): BelongsTo
+    {
+        return $this->belongsTo(Lecture::class, 'id');
     }
 }

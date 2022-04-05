@@ -18,11 +18,10 @@ class LectureFactory extends Factory
     {
         $article = $this->faker->paragraph();
 
-        $title = implode(' ', array_slice(explode(' ', $article), 0, rand(1,3)));
+        $title = implode(' ', array_slice(explode(' ', $article), 0, rand(1, 3)));
         return [
             'title' => $title,
             'description' => $article
            ];
-
     }
 }
