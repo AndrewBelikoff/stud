@@ -21,7 +21,7 @@ class StudentFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->email(),
-            'group_id' =>  (rand(0, 2)>0) ? Arr::random(Group::get('id')->all()) : null,
+            'group_id' =>  (rand(0, 4)>0) ? Arr::random(Group::get('id')->all()) : null,
         ];
     }
 }

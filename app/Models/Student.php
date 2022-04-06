@@ -36,7 +36,7 @@ class Student extends Model
     }
 
     /**
-     * Лекции студента.
+     * Назначенные лекции студента в соответствии с группой.
      */
     public function lectures(): HasManyThrough
     {
@@ -48,5 +48,13 @@ class Student extends Model
             'group_id',
             'lecture_id'
         );
+    }
+
+    /**
+     * Прослушанные студента.
+     */
+    public function studies(): hasMany
+    {
+        return $this->hasMany(Study::class);
     }
 }

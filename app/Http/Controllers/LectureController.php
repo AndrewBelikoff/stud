@@ -2,23 +2,42 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Lecture;
+use Illuminate\Database\Eloquent\Builder;
 
 class LectureController extends Controller
 {
-    public function getAll(){
-        return '13) получить список всех лекций';
+    //  13) получить список всех лекций
+    public function getAll()
+    {
+        return Lecture::all();
     }
 
-    public function set($data){
-        return '15) создать лекцию, 16) обновить лекцию (тема, описание)'.$data;
+    public function set($data)
+    {
+        return '15) создать лекцию, 16) обновить лекцию (тема, описание)' . $data;
     }
 
-    public function del($data){
-        return '17) удалить лекцию'.$data;
+    public function del($data)
+    {
+        return '17) удалить лекцию' . $data;
     }
 
-    public function info($data){
-        return '2) получить информацию о конкретном студенте (имя, email + класс + прослушанные лекции)'.$data;
+    //  14) получить информацию о конкретной лекции (тема, описание + какие классы прослушали лекцию + какие студенты прослушали лекцию)
+    public function info($data)
+    {
+        return Lecture::where('id', $data)
+            ->with([
+                'students' => function ($query) {
+                    $query->where('is_completed', 1);
+                },
+                'groups'=> function ($query) use ($data) {
+                    $query->whereDoesntHave('students', function (Builder $query) use ($data) {
+                        $query->whereHas('studies', function (Builder $query) use ($data) {
+                            $query->where('is_completed', 0)->where('lecture_id', $data);
+                        });
+                    });
+                }])
+            ->get();
     }
 }

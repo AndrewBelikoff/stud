@@ -16,7 +16,7 @@ class StudentSeeder extends Seeder
      */
     public function run()
     {
-        Student::factory(10)->create()
+        Student::factory(20)->create()
             ->each(function ($student) {
                 foreach ($student->lectures->pluck('id') as $lecture) {
                     Study::updateOrCreate(
