@@ -23,26 +23,26 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('student')->group(function () {
     Route::any('/all', [StudentController::class, 'getAll']);
-    Route::any('/set/{s}', [StudentController::class, 'set']);
-    Route::any('/del/{s}', [StudentController::class, 'del']);
-    Route::any('/info/{s}', [StudentController::class, 'info']);
+    Route::any('/set', [StudentController::class, 'set']);
+    Route::any('/del', [StudentController::class, 'del']);
+    Route::any('/info', [StudentController::class, 'info']);
 });
 
 Route::prefix('class')->group(function () {
     Route::any('/all', [GroupController::class, 'getAll']);
-    Route::any('/set/{s}', [GroupController::class, 'set']);
-    Route::any('/del/{s}', [GroupController::class, 'del']);
-    Route::any('/info/{s}', [GroupController::class, 'info']);
+    Route::any('/set', [GroupController::class, 'set']);
+    Route::any('/del', [GroupController::class, 'del']);
+    Route::any('/info', [GroupController::class, 'info']);
 });
 
 Route::prefix('plan')->group(function () {
-    Route::any('/info/{c}', [PlanController::class, 'getPlan']);
-    Route::any('/set/{s}', [PlanController::class, 'set']);
+    Route::any('/info', [PlanController::class, 'getPlan']);
+    Route::any('/set', [PlanController::class, 'set']);
 });
 
 Route::prefix('lecture')->group(function () {
     Route::any('/all', [LectureController::class, 'getAll']);
-    Route::any('/set/{s}', [LectureController::class, 'set']);
-    Route::any('/del/{s}', [LectureController::class, 'del']);
-    Route::any('/info/{s}', [LectureController::class, 'info']);
+    Route::any('/set', [LectureController::class, 'set']);
+    Route::any('/del', [LectureController::class, 'del']);
+    Route::any('/info', [LectureController::class, 'info']);
 });

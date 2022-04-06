@@ -17,6 +17,7 @@ class Plan extends Model
      */
     protected $table = 'plans';
     protected $fillable = [
+        'id',
         'group_id',
         'lecture_id'
     ];

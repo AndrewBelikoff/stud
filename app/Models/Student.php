@@ -24,7 +24,8 @@ class Student extends Model
      */
     protected $fillable = [
         'name',
-        'email'
+        'email',
+        'group_id'
         ];
 
     /**

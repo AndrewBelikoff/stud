@@ -26,6 +26,17 @@ class Study extends Model
     ];
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'student_id' => 'int',
+        'lecture_id' => 'int',
+        'is_completed' => 'int'
+        ];
+
+    /**
      * Студенты
      */
     public function students(): BelongsTo

@@ -13,19 +13,29 @@ class GroupController extends Controller
         return Group::all();
     }
 
-    public function set($data)
+
+    //  10) создать класс, 11) обновить класс (название)
+    public function set(Request $request)
     {
-        return '10) создать класс, 11) обновить класс (название)'.$data;
+
+        return Group::updateOrCreate(
+            [
+                'id' => $request->id
+            ],
+            [
+                'title' => $request->title
+            ]);
     }
 
-    public function del($data)
+    //  12) удалить класс (при удалении класса, привязанные студенты должны открепляться от класса, но не удаляться полностью из системы)
+    public function del(Request $request)
     {
-        return '12) удалить класс (при удалении класса, привязанные студенты должны открепляться от класса, но не удаляться полностью из системы)'.$data;
+        return Group::where('id', $request->id)->delete();
     }
 
     //  7) получить информацию о конкретном классе (название + студенты класса)
-    public function info($data)
+    public function info(Request $request)
     {
-        return Group::where('id', $data)->with('students')->get();
+        return Group::where('id', $request->id)->with('students')->get();
     }
 }
