@@ -4,6 +4,7 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\LectureController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,3 +47,5 @@ Route::prefix('lecture')->group(function () {
     Route::any('/del', [LectureController::class, 'del']);
     Route::any('/info', [LectureController::class, 'info']);
 });
+
+Route::any('/test', [TestController::class, 'index']);

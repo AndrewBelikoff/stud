@@ -35,18 +35,11 @@ class Lecture extends Model
     }
 
     /**
-     * Группы
+     * Уроки
      */
-    public function groups(): belongsToMany
+    public function studies(): belongsToMany
     {
-        return $this->belongsToMany(Group::class, Plan::class);
+        return $this->belongsToMany(Study::class);
     }
 
-    /**
-     * Студенты
-     */
-    public function students(): belongsToMany
-    {
-        return $this->belongsToMany(Student::class, Study::class);
-    }
 }

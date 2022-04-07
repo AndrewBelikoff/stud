@@ -33,11 +33,11 @@ class Student extends Model
      */
     public function groups(): BelongsTo
     {
-        return $this->belongsTo(Group::class, 'id');
+        return $this->belongsTo(Group::class, 'group_id', 'group_id');
     }
 
     /**
-     * Назначенные лекции студента в соответствии с группой.
+     * Лекции студента в соответствии с группой.
      */
     public function lectures(): HasManyThrough
     {
@@ -52,7 +52,7 @@ class Student extends Model
     }
 
     /**
-     * Прослушанные студента.
+     * Прослушанные  лекции студента.
      */
     public function studies(): hasMany
     {
