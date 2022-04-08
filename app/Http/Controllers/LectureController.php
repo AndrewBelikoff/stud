@@ -24,7 +24,8 @@ class LectureController extends Controller
             [
                 'title' => $request->title,
                 'description' => $request->description
-            ]);
+            ]
+        );
     }
 
     //  17) удалить лекцию

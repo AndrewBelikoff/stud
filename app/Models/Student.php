@@ -63,7 +63,6 @@ class Student extends Model
             'id',
             'id',
             'lecture_id',
-
         );
     }
 

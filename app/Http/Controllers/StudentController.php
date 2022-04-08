@@ -25,7 +25,8 @@ class StudentController extends Controller
             [
                 'name' => $request->name,
                 'group_id' => $request->group_id,
-            ]);
+            ]
+        );
 
         $group_id = Student::where('email', $request->email)->pluck('group_id');
         $student_id = Student::where('email', $request->email)->value('id');

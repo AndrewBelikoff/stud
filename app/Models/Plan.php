@@ -39,7 +39,7 @@ class Plan extends Model
      */
     public function lectures(): HasMany
     {
-        return $this->hasMany(Lecture::class,'id', 'lecture_id');
+        return $this->hasMany(Lecture::class, 'id', 'lecture_id');
     }
 
     /**

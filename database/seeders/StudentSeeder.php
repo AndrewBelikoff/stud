@@ -30,6 +30,5 @@ class StudentSeeder extends Seeder
                     );
                 }
             });
-
     }
 }

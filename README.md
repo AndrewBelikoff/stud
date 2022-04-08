@@ -53,3 +53,5 @@
     
 `POST /api/lecture/set в теле запроса id(авторизация), title, description`
 17) удалить лекцию
+
+`DELETE /api/lecture/{id}`

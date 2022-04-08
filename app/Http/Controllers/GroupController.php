@@ -17,14 +17,14 @@ class GroupController extends Controller
     //  10) создать класс, 11) обновить класс (название)
     public function set(Request $request)
     {
-
         return Group::updateOrCreate(
             [
                 'id' => $request->id
             ],
             [
                 'title' => $request->title
-            ]);
+            ]
+        );
     }
 
     //  12) удалить класс (при удалении класса, привязанные студенты должны открепляться от класса, но не удаляться полностью из системы)
@@ -38,6 +38,4 @@ class GroupController extends Controller
     {
         return Group::where('id', $id)->with('students')->get();
     }
-
-
 }

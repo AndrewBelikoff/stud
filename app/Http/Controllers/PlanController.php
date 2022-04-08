@@ -25,7 +25,8 @@ class PlanController extends Controller
             ],
             [
                 'order' => $request->order
-            ]);
+            ]
+        );
 
         foreach (Student::where('group_id', $request->group_id)->get() as $student) {
             Study::updateOrCreate(
@@ -38,6 +39,5 @@ class PlanController extends Controller
                 ]
             );
         }
-
     }
 }

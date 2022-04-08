@@ -40,7 +40,7 @@ class Lecture extends Model
      */
     public function studies(): belongsToMany
     {
-        return $this->belongsToMany(Study::class, 'studies','lecture_id');
+        return $this->belongsToMany(Study::class, 'studies', 'lecture_id');
     }
 
     /**
