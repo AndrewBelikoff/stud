@@ -24,12 +24,14 @@ class PlanSeeder extends Seeder
         $this->lectures= Lecture::get('id')->all();
 
         foreach ($this->groups as $group) {
+            $i=1;
             foreach (Arr::shuffle($this->lectures) as $lecture) {
                 if (rand(0, 4)>1) {
                     Plan::updateOrCreate(
                         [
                             'group_id' => $group['id'],
                             'lecture_id' => $lecture['id'],
+                            'order' =>$i++
                         ]
                     );
                 }

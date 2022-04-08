@@ -33,26 +33,42 @@ class Student extends Model
      */
     public function groups(): BelongsTo
     {
-        return $this->belongsTo(Group::class, 'group_id', 'group_id');
+        return $this->belongsTo(Group::class, 'id');
     }
 
+//    /**
+//     * Назначенные лекции студента в соответствии с группой.
+//     */
+//    public function lectures(): HasManyThrough
+//    {
+//        return $this->hasManyThrough(
+//            Lecture::class,
+//            Plan::class,
+//            'group_id',
+//            'id',
+//            'group_id',
+//            'lecture_id'
+//        );
+//    }
+
     /**
-     * Лекции студента в соответствии с группой.
-     */
+    //     * Посещаемость лекций студентом.
+    //     */
     public function lectures(): HasManyThrough
     {
         return $this->hasManyThrough(
             Lecture::class,
-            Plan::class,
-            'group_id',
+            Study::class,
+            'student_id',
             'id',
-            'group_id',
-            'lecture_id'
+            'id',
+            'lecture_id',
+
         );
     }
 
     /**
-     * Прослушанные  лекции студента.
+     * Лекции студента.
      */
     public function studies(): hasMany
     {

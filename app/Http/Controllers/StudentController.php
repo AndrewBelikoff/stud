@@ -18,7 +18,7 @@ class StudentController extends Controller
     //  3) создать студента, 4) обновить студента (имя, принадлежность к классу)
     public function set(Request $request)
     {
-        return Student::updateOrCreate(
+        Student::updateOrCreate(
             [
                 'email' => $request->email,
             ],
@@ -27,39 +27,45 @@ class StudentController extends Controller
                 'group_id' => $request->group_id,
             ]);
 
-//          $group_id = Student::where('email', $request->email)->pluck('group_id');
-//          $student_id = Student::where('email', $request->email)->value('id');
-//
-//        foreach (Plan::where('group_id', $group_id)->get('lecture_id') as $lecture) {
-//            Study::updateOrCreate(
-//                [
-//                    'student_id' => $student_id,
-//                    'lecture_id' => $lecture->lecture_id,
-//                ],
-//                [
-////                    'is_completed' => 0,
-//                ]
-//            );
-//        }
-//
-//       return'bl';
+        $group_id = Student::where('email', $request->email)->pluck('group_id');
+        $student_id = Student::where('email', $request->email)->value('id');
+
+        $a = Study::where('student_id', $student_id)
+            ->where('is_completed', 0)
+            ->whereDoesntHave('plans', function ($q) use ($group_id) {
+                $q->where('group_id', $group_id);
+            })
+            ->pluck('id');
+
+        Study::destroy($a);
+
+
+        foreach (Plan::where('group_id', $group_id)->get('lecture_id') as $lecture) {
+            Study::updateOrCreate(
+                [
+                    'student_id' => $student_id,
+                    'lecture_id' => $lecture->lecture_id,
+                ],
+                [
+//                    'is_completed' => 0,
+                ]
+            );
+        }
+
+        return 'bl';
     }
 
     //  5) удалить студента
-    public function del(Request $request)
+    public function del($id)
     {
-        return Student::where('id', $request->id)->delete();
+        return Student::findOrFail($id)->delete();
     }
 
     //  2) получить информацию о конкретном студенте (имя, email + класс + прослушанные лекции)
-    public function info(Request $request)
+    public function info($id)
     {
-//        return Student::where('id', $request->id)->with('lectures')->get(); //назначенные через учебный план
-        return Student::where('id', $request->id) //прослушанные в уроках
-            ->with([
-                'studies' => function ($query) {
-                    $query->where('is_completed', 1);
-                }])
-            ->get();
+        return Student::where('id', $id)->with('lectures', function ($q) use ($id) {
+            $q->where('is_completed', 1);
+        })->get();
     }
 }

@@ -23,10 +23,10 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::prefix('student')->group(function () {
-    Route::any('/all', [StudentController::class, 'getAll']);
-    Route::any('/set', [StudentController::class, 'set']);
-    Route::any('/del', [StudentController::class, 'del']);
-    Route::any('/info', [StudentController::class, 'info']);
+    Route::get('/all', [StudentController::class, 'getAll']);   // 1)
+    Route::post('/set', [StudentController::class, 'set']);     // 3, 4)
+    Route::delete('/{id}', [StudentController::class, 'del']);  // 5)
+    Route::get('/{id}', [StudentController::class, 'info']);    // 2)
 });
 
 Route::prefix('class')->group(function () {

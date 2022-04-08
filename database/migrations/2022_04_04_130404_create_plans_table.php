@@ -16,6 +16,7 @@ return new class () extends Migration {
             $table->id();
             $table->integer('group_id')->unsigned();
             $table->integer('lecture_id')->unsigned();
+            $table->integer('order')->unsigned();
             $table->timestamps();
             $table->foreign('group_id', 'plans_fk0')->references('id')->on('groups')
                 ->onUpdate('cascade')

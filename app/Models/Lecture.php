@@ -34,12 +34,12 @@ class Lecture extends Model
         return $this->hasMany(Plan::class, 'id');
     }
 
+
     /**
-     * Уроки
+     * Посещаемость студентов
      */
     public function studies(): belongsToMany
     {
-        return $this->belongsToMany(Study::class);
+        return $this->belongsToMany(Study::class, 'studies','lecture_id');
     }
-
 }

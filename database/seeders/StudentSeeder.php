@@ -25,7 +25,7 @@ class StudentSeeder extends Seeder
                         'lecture_id' => $lecture,
                         ],
                         [
-                        'is_completed' => 0
+                        'is_completed' => rand(0,1)
                     ]
                     );
                 }
