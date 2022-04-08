@@ -30,22 +30,22 @@ Route::prefix('student')->group(function () {
 });
 
 Route::prefix('class')->group(function () {
-    Route::any('/all', [GroupController::class, 'getAll']);
-    Route::any('/set', [GroupController::class, 'set']);
-    Route::any('/del', [GroupController::class, 'del']);
-    Route::any('/info', [GroupController::class, 'info']);
+    Route::get('/all', [GroupController::class, 'getAll']);     // 6)
+    Route::post('/set', [GroupController::class, 'set']);       // 10, 11)
+    Route::delete('/{id}', [GroupController::class, 'del']);// 12
+    Route::get('/{id}', [GroupController::class, 'info']);      // 7)
 });
 
 Route::prefix('plan')->group(function () {
-    Route::any('/info', [PlanController::class, 'getPlan']);
-    Route::any('/set', [PlanController::class, 'set']);
+    Route::get('/{id}', [PlanController::class, 'getPlan']);    // 8)
+    Route::post('/set', [PlanController::class, 'set']);        // 9)
 });
 
 Route::prefix('lecture')->group(function () {
-    Route::any('/all', [LectureController::class, 'getAll']);
-    Route::any('/set', [LectureController::class, 'set']);
-    Route::any('/del', [LectureController::class, 'del']);
-    Route::any('/info', [LectureController::class, 'info']);
+    Route::get('/all', [LectureController::class, 'getAll']);   // 13)
+    Route::post('/set', [LectureController::class, 'set']);     // 15, 16)
+    Route::delete('/{id}', [LectureController::class, 'del']);  // 17)
+    Route::get('/{id}', [LectureController::class, 'info']);    // 14)
 });
 
 Route::any('/test', [TestController::class, 'index']);

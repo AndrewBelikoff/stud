@@ -13,7 +13,7 @@ return new class () extends Migration {
     public function up()
     {
         Schema::create('plans', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id')->unsigned();
             $table->integer('group_id')->unsigned();
             $table->integer('lecture_id')->unsigned();
             $table->integer('order')->unsigned();

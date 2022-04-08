@@ -42,4 +42,20 @@ class Lecture extends Model
     {
         return $this->belongsToMany(Study::class, 'studies','lecture_id');
     }
+
+    /**
+     * Студенты
+     */
+    public function students(): belongsToMany
+    {
+        return $this->belongsToMany(Student::class, 'studies');
+    }
+
+    /**
+     * Группы
+     */
+    public function groups(): belongsToMany
+    {
+        return $this->belongsToMany(Group::class, 'plans');
+    }
 }

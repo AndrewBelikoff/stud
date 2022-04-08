@@ -28,14 +28,16 @@ class GroupController extends Controller
     }
 
     //  12) удалить класс (при удалении класса, привязанные студенты должны открепляться от класса, но не удаляться полностью из системы)
-    public function del(Request $request)
+    public function del($id)
     {
-        return Group::where('id', $request->id)->delete();
+        return Group::findOrFail($id)->delete();
     }
 
-    //  7) получить информацию о конкретном классе (название + студенты класса)
-    public function info(Request $request)
+    //  8) получить учебный план (список лекций) для конкретного класса
+    public function info($id)
     {
-        return Group::where('id', $request->id)->with('students')->get();
+        return Group::where('id', $id)->with('students')->get();
     }
+
+
 }

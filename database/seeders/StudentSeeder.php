@@ -18,17 +18,18 @@ class StudentSeeder extends Seeder
     {
         Student::factory(20)->create()
             ->each(function ($student) {
-                foreach ($student->lectures->pluck('id') as $lecture) {
+                foreach (Plan::where('group_id', $student['group_id'])->pluck('lecture_id') as $lecture) {
                     Study::updateOrCreate(
                         [
-                        'student_id' => $student['id'],
-                        'lecture_id' => $lecture,
+                            'student_id' => $student['id'],
+                            'lecture_id' => $lecture,
                         ],
                         [
-                        'is_completed' => rand(0,1)
-                    ]
+                            'is_completed' => rand(0, 1)
+                        ]
                     );
                 }
             });
+
     }
 }

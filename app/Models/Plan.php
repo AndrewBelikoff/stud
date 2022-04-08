@@ -22,7 +22,8 @@ class Plan extends Model
     protected $fillable = [
         'id',
         'group_id',
-        'lecture_id'
+        'lecture_id',
+        'order'
     ];
 
     /**
