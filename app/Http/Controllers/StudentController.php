@@ -2,71 +2,62 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Plan;
 use App\Models\Student;
-use App\Models\Study;
+use App\Services\StudentService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
-    //  1) получить список всех студентов
-    public function getAll()
+    protected $studentService;
+
+    public function __construct(StudentService $studentService)
     {
-        return Student::all();
+        $this->studentService = $studentService;
+    }
+
+    //  1) получить список всех студентов
+    public function getAll(): JsonResponse
+    {
+        try {
+            $result = $this->studentService->getAll();
+        } catch (ModelNotFoundException $e) {
+            $result = $e;
+        }
+        return response()->json($result);
     }
 
     //  3) создать студента, 4) обновить студента (имя, принадлежность к классу)
-    public function set(Request $request)
+    public function set(Request $request): JsonResponse
     {
-        Student::updateOrCreate(
-            [
-                'email' => $request->email,
-            ],
-            [
-                'name' => $request->name,
-                'group_id' => $request->group_id,
-            ]
-        );
-
-        $group_id = Student::where('email', $request->email)->pluck('group_id');
-        $student_id = Student::where('email', $request->email)->value('id');
-
-        $a = Study::where('student_id', $student_id)
-            ->where('is_completed', 0)
-            ->whereDoesntHave('plans', function ($q) use ($group_id) {
-                $q->where('group_id', $group_id);
-            })
-            ->pluck('id');
-
-        Study::destroy($a);
-
-
-        foreach (Plan::where('group_id', $group_id)->get('lecture_id') as $lecture) {
-            Study::updateOrCreate(
-                [
-                    'student_id' => $student_id,
-                    'lecture_id' => $lecture->lecture_id,
-                ],
-                [
-//                    'is_completed' => 0,
-                ]
-            );
+        try {
+            $result = $this->studentService->set($request);
+        } catch (ModelNotFoundException $e) {
+            $result = $e;
         }
-
-        return 'bl';
+        return response()->json($result);
     }
 
     //  5) удалить студента
-    public function del($id)
+    public function del($id): JsonResponse
     {
-        return Student::findOrFail($id)->delete();
+        try {
+            $result = $this->studentService->del($id);
+        } catch (ModelNotFoundException $e) {
+            $result = $e;
+        }
+        return response()->json($result);
     }
 
     //  2) получить информацию о конкретном студенте (имя, email + класс + прослушанные лекции)
-    public function info($id)
+    public function info($id): JsonResponse
     {
-        return Student::where('id', $id)->with('lectures', function ($q) use ($id) {
-            $q->where('is_completed', 1);
-        })->get();
+        try {
+            $result = $this->studentService->info($id);
+        } catch (ModelNotFoundException $e) {
+            $result = '$e';
+        }
+        return response()->json($result);
     }
 }
