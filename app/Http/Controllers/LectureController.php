@@ -8,7 +8,6 @@ use App\Services\LectureService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 
-
 class LectureController extends Controller
 {
     protected $lectureService;

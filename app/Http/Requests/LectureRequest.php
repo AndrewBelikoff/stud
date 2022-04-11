@@ -24,9 +24,9 @@ class LectureRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'integer',
+           'id' => 'integer|nullable',
            'title' => 'string|min:3|max:20',
-            'description' => 'string|min:3|max:200'
+           'description' => 'string|min:3|max:200'
     ];
     }
 }

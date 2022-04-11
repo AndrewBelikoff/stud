@@ -21,10 +21,10 @@ class StudentRequest extends FormRequest
      *
      * @return array
      */
-    public function rules():array
+    public function rules(): array
     {
         return [
-            'email' => 'required|max:30',
+            'email' => 'required|email|max:30',
             'name' => 'min:4|required',
             'group_id' =>'max:3'
         ];

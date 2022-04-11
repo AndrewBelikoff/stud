@@ -22,6 +22,7 @@ class Lecture extends Model
      */
     protected $table = 'lectures';
     protected $fillable = [
+        'id',
         'title',
         'description'
     ];

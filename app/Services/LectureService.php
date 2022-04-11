@@ -6,7 +6,6 @@ use App\Models\Lecture;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
-
 class LectureService
 {
     //  13) получить список всех лекций
@@ -18,15 +17,26 @@ class LectureService
     //  15) создать лекцию, 16) обновить лекцию (тема, описание)
     public function set(array $data): Lecture
     {
-        return Lecture::updateOrCreate(
-            [
-                'id' => $data['id']
-            ],
-            [
-                'title' => $data['title'],
-                'description' => $data['description']
-            ]
-        );
+        if (array_key_exists('id', $data)) {
+            return Lecture::updateOrCreate(
+                [
+                    'id' => $data['id']
+                ],
+                [
+                    'title' => $data['title'],
+                    'description' => $data['description']
+                ]
+            );
+        } else {
+            return Lecture::updateOrCreate(
+                [
+                    'title' => $data['title'],
+                ],
+                [
+                    'description' => $data['description']
+                ]
+            );
+        }
     }
 
     //  17) удалить лекцию

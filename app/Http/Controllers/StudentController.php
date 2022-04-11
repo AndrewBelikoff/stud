@@ -7,7 +7,6 @@ use App\Services\StudentService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 
-
 class StudentController extends Controller
 {
     protected $studentService;

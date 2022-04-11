@@ -20,14 +20,22 @@ class GroupService
     //  10) создать класс, 11) обновить класс (название)
     public function set(array $data): Group
     {
-        return Group::updateOrCreate(
-            [
-                'id' => $data['id']
-            ],
-            [
-                'title' => $data['title']
-            ]
-        );
+        if (array_key_exists('id', $data)) {
+            return Group::updateOrCreate(
+                [
+                    'id' => $data['id']
+                ],
+                [
+                    'title' => $data['title']
+                ]
+            );
+        } else {
+            return Group::create(
+                [
+                    'title' => $data['title']
+                ]
+            );
+        }
     }
 
     //  12) удалить класс (при удалении класса, привязанные студенты должны открепляться от класса, но не удаляться полностью из системы)

@@ -7,7 +7,6 @@ use App\Models\Student;
 use App\Models\Study;
 use Illuminate\Support\Collection;
 
-
 class PlanService
 {
     public function getPlan($id): Collection
