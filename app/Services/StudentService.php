@@ -15,21 +15,17 @@ class StudentService
         return Student::all();
     }
 
-    public function set(Request $request): Collection
+    public function set(array $data): Student
     {
-        $request = $request; //TODO validate
         $student = Student::updateOrCreate(
             [
-                'email' => $request->email,
+                'email' => $data['email'],
             ],
             [
-                'name' => $request->name,
-                'group_id' => $request->group_id,
+                'name' => $data['name'],
+                'group_id' => $data['group_id'],
             ]
         );
-
-//        $group_id = Student::where('email', $request->email)->pluck('group_id');
-//        $student_id = Student::where('email', $request->email)->value('id');
 
         $a = Study::where('student_id', $student['id'])
             ->where('is_completed', 0)

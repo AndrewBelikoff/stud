@@ -2,30 +2,43 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LectureRequest;
 use App\Models\Lecture;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
+use App\Services\LectureService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\JsonResponse;
+
 
 class LectureController extends Controller
 {
-    //  13) получить список всех лекций
-    public function getAll()
+    protected $lectureService;
+
+    public function __construct(LectureService $lectureService)
     {
-        return Lecture::all();
+        $this->lectureService = $lectureService;
+    }
+
+    //  13) получить список всех лекций
+    public function getAll(): JsonResponse
+    {
+        try {
+            $result = $this->lectureService->getAll();
+        } catch (ModelNotFoundException $e) {
+            $result = $e;
+        }
+        return response()->json($result);
     }
 
     //  15) создать лекцию, 16) обновить лекцию (тема, описание)
-    public function set(Request $request)
+    public function set(LectureRequest $request)
     {
-        return Lecture::updateOrCreate(
-            [
-                'id' => $request->id
-            ],
-            [
-                'title' => $request->title,
-                'description' => $request->description
-            ]
-        );
+        $validated = $request->validated();
+        try {
+            $result = $this->lectureService->set($validated);
+        } catch (ModelNotFoundException $e) {
+            $result = $e;
+        }
+        return response()->json($result);
     }
 
     //  17) удалить лекцию
@@ -35,20 +48,13 @@ class LectureController extends Controller
     }
 
     //  14) получить информацию о конкретной лекции (тема, описание + какие классы прослушали лекцию + какие студенты прослушали лекцию)
-    public function info($id)
+    public function info($id): JsonResponse
     {
-        return Lecture::where('id', $id)
-            ->with([
-                'students' => function ($query) {
-                    $query->where('is_completed', 1);
-                },
-                'groups'=> function ($query) use ($id) {
-                    $query->whereDoesntHave('students', function (Builder $query) use ($id) {
-                        $query->whereHas('studies', function (Builder $query) use ($id) {
-                            $query->where('is_completed', 0)->where('lecture_id', $id);
-                        });
-                    });
-                }])
-            ->get();
+        try {
+            $result = $this->lectureService->info($id);
+        } catch (ModelNotFoundException $e) {
+            $result = '$e';
+        }
+        return response()->json($result);
     }
 }

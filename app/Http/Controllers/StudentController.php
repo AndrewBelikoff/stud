@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Student;
+use App\Http\Requests\StudentRequest;
 use App\Services\StudentService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+
 
 class StudentController extends Controller
 {
@@ -29,10 +29,12 @@ class StudentController extends Controller
     }
 
     //  3) создать студента, 4) обновить студента (имя, принадлежность к классу)
-    public function set(Request $request): JsonResponse
+    public function set(StudentRequest $request): JsonResponse
     {
+        $validated = $request->validated();
+
         try {
-            $result = $this->studentService->set($request);
+            $result = $this->studentService->set($validated);
         } catch (ModelNotFoundException $e) {
             $result = $e;
         }
