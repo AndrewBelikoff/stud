@@ -24,8 +24,9 @@ class StudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email|max:30',
-            'name' => 'min:4|required',
+            'id' => 'integer',
+            'email' => 'email|max:30',
+            'name' => 'min:4',
             'group_id' =>'max:3'
         ];
     }

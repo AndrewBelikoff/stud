@@ -6,7 +6,6 @@ use App\Models\Plan;
 use App\Models\Student;
 use App\Models\Study;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
 
 class StudentService
 {
@@ -17,15 +16,28 @@ class StudentService
 
     public function set(array $data): Student
     {
-        $student = Student::updateOrCreate(
-            [
-                'email' => $data['email'],
-            ],
-            [
-                'name' => $data['name'],
-                'group_id' => $data['group_id'],
-            ]
-        );
+        if (array_key_exists('id', $data)) {
+            $student = Student::updateOrCreate(
+                [
+                    'id' => $data['id'],
+                ],
+                [
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'group_id' => $data['group_id'],
+                ]
+            );
+        } else {
+            $student = Student::updateOrCreate(
+                [
+                    'email' => $data['email'],
+                ],
+                [
+                    'name' => $data['name'],
+                    'group_id' => $data['group_id'],
+                ]
+            );
+        };
 
         $a = Study::where('student_id', $student['id'])
             ->where('is_completed', 0)
