@@ -16,17 +16,8 @@ class StudentService
 
     public function set(array $data): Student
     {
-        if (array_key_exists('id', $data)) {
-            $student = Student::updateOrCreate(
-                [
-                    'id' => $data['id'],
-                ],
-                [
-                    'name' => $data['name'],
-                    'email' => $data['email'],
-                    'group_id' => $data['group_id'],
-                ]
-            );
+        if (array_key_exists('id', $data) && $student = Student::find($data['id'])) {
+            $student->fill($data)->save();
         } else {
             $student = Student::updateOrCreate(
                 [
