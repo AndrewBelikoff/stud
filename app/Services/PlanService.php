@@ -26,14 +26,15 @@ class PlanService
             ]
         );
 
+        // если создалась новая, то добавить новую лекцию
         foreach (Student::where('group_id', $data['group_id'])->get() as $student) {
-            Study::updateOrCreate(
+            Study::firstOrCreate(
                 [
                     'student_id' => $student['id'],
                     'lecture_id' => $data['lecture_id'],
-                ],
+                    ],
                 [
-//                    'is_completed' => 0,
+                    'is_completed' => 0
                 ]
             );
         }
@@ -65,10 +66,12 @@ class PlanService
 
             // добавить каждому студенту лекции в соответствии с планом
             foreach (Student::where('group_id', $data['group_id'])->get() as $student) {
-                Study::create(
+                Study::firstOrCreate(
                     [
                         'student_id' => $student['id'],
                         'lecture_id' => $lecture,
+                        ],
+                    [
                         'is_completed' => 0,
                     ]
                 );

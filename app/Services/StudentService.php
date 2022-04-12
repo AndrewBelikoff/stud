@@ -39,6 +39,7 @@ class StudentService
             );
         };
 
+        // удалить старые лекции
         $a = Study::where('student_id', $student['id'])
             ->where('is_completed', 0)
             ->whereDoesntHave('plans', function ($q) use ($student) {
@@ -47,14 +48,13 @@ class StudentService
             ->pluck('id');
         Study::destroy($a);
 
+        // записать новые лекции в соответствии с учебным планом
         foreach (Plan::where('group_id', $student['group_id'])->get('lecture_id') as $lecture) {
-            Study::updateOrCreate(
+            Study::create(
                 [
                     'student_id' => $student['id'],
                     'lecture_id' => $lecture->lecture_id,
-                ],
-                [
-//                    'is_completed' => 0,
+                    'is_completed' => 0,
                 ]
             );
         }
