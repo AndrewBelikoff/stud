@@ -24,9 +24,11 @@ class PlanRequest extends FormRequest
     public function rules()
     {
         return [
-            'group_id' => 'required|integer',
-            'lecture_id' => 'required|integer',
-            'order' => 'integer'
+            'group_id' => 'required|integer|exists:groups,id',
+            'lecture_id' => 'integer',
+            'order' => 'integer',
+            'lectures' => 'array',
+            'lectures.*'=>'integer'
         ];
     }
 }

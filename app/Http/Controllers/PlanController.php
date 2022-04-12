@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NewPlanRequest;
 use App\Http\Requests\PlanRequest;
 use App\Services\PlanService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -33,6 +34,18 @@ class PlanController extends Controller
         $validated = $request->validated();
         try {
             $result = $this->planService->setPlan($validated);
+        } catch (ModelNotFoundException $e) {
+            $result = $e;
+        }
+        return response()->json($result);
+    }
+
+    //  создание учебного плана для заданного класса (предыдущие планы удаляются)
+    public function new(PlanRequest $request): JsonResponse
+    {
+        $validated = $request->validated();
+        try {
+            $result = $this->planService->newPlan($validated);
         } catch (ModelNotFoundException $e) {
             $result = $e;
         }

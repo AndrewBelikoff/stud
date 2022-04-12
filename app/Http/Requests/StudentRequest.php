@@ -25,7 +25,7 @@ class StudentRequest extends FormRequest
     {
         return [
             'id' => 'integer',
-            'email' => 'email|max:30',
+            'email' => 'email|max:30|unique:students,email',
             'name' => 'min:4',
             'group_id' =>'max:3'
         ];

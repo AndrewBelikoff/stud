@@ -39,6 +39,7 @@ Route::prefix('class')->group(function () {
 Route::prefix('plan')->group(function () {
     Route::get('/{id}', [PlanController::class, 'getPlan']);    // 8)
     Route::post('/set', [PlanController::class, 'set']);        // 9)
+    Route::post('/new', [PlanController::class, 'new']);        // удаление предыдущих планов для класса, создание нового учебного плана
 });
 
 Route::prefix('lecture')->group(function () {

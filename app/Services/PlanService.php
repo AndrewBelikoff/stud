@@ -39,4 +39,42 @@ class PlanService
         }
         return $plan;
     }
+
+    public function newPlan(array $data): Collection
+    {
+        // удалить лекции старых планов
+        $a = Study::where('is_completed', 0)
+            ->whereHas('students', function ($q) use ($data) {
+                $q->where('group_id', $data['group_id']);
+            })
+            ->pluck('id');
+        Study::destroy($a);
+
+        // удалить старые планы из планов
+        Plan::where('group_id', $data['group_id'])->delete();
+
+        // по каждой новой лекции создать запись
+        foreach ($data['lectures'] as $order => $lecture) {
+            Plan::create(
+                [
+                    'group_id' => $data['group_id'],
+                    'lecture_id' => $lecture,
+                    'order' => $order
+                ]
+            );
+
+            // добавить каждому студенту лекции в соответствии с планом
+            foreach (Student::where('group_id', $data['group_id'])->get() as $student) {
+                Study::create(
+                    [
+                        'student_id' => $student['id'],
+                        'lecture_id' => $lecture,
+                        'is_completed' => 0,
+                    ]
+                );
+            }
+        }
+
+        return Plan::where('group_id', $data['group_id'])->get();
+    }
 }
