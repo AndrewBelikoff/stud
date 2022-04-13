@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\NewPlanRequest;
 use App\Http\Requests\PlanRequest;
 use App\Services\PlanService;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Exception;
 use Illuminate\Http\JsonResponse;
 
 class PlanController extends Controller
@@ -22,7 +21,7 @@ class PlanController extends Controller
     {
         try {
             $result = $this->planService->getPlan($id);
-        } catch (ModelNotFoundException $e) {
+        } catch (Exception $e) {
             $result = $e;
         }
         return response()->json($result);
@@ -34,7 +33,7 @@ class PlanController extends Controller
         $validated = $request->validated();
         try {
             $result = $this->planService->setPlan($validated);
-        } catch (ModelNotFoundException $e) {
+        } catch (Exception $e) {
             $result = $e;
         }
         return response()->json($result);
@@ -46,7 +45,7 @@ class PlanController extends Controller
         $validated = $request->validated();
         try {
             $result = $this->planService->newPlan($validated);
-        } catch (ModelNotFoundException $e) {
+        } catch (Exception $e) {
             $result = $e;
         }
         return response()->json($result);

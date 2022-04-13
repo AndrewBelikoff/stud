@@ -11,7 +11,7 @@ class PlanService
 {
     public function getPlan($id): Collection
     {
-        return Plan::where('group_id', $id)->get();
+        return Plan::where('group_id', $id)->with('lectures')->get();
     }
 
     public function setPlan(array $data): Plan

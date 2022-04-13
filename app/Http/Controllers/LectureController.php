@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LectureRequest;
 use App\Models\Lecture;
 use App\Services\LectureService;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Exception;
 use Illuminate\Http\JsonResponse;
 
 class LectureController extends Controller
@@ -22,7 +22,7 @@ class LectureController extends Controller
     {
         try {
             $result = $this->lectureService->getAll();
-        } catch (ModelNotFoundException $e) {
+        } catch (Exception $e) {
             $result = $e;
         }
         return response()->json($result);
@@ -34,7 +34,7 @@ class LectureController extends Controller
         $validated = $request->validated();
         try {
             $result = $this->lectureService->set($validated);
-        } catch (ModelNotFoundException $e) {
+        } catch (Exception $e) {
             $result = $e;
         }
         return response()->json($result);
@@ -51,7 +51,7 @@ class LectureController extends Controller
     {
         try {
             $result = $this->lectureService->info($id);
-        } catch (ModelNotFoundException $e) {
+        } catch (Exception $e) {
             $result = '$e';
         }
         return response()->json($result);

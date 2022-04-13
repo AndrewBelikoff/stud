@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StudentRequest;
 use App\Services\StudentService;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Exception;
 use Illuminate\Http\JsonResponse;
 
 class StudentController extends Controller
@@ -21,7 +21,7 @@ class StudentController extends Controller
     {
         try {
             $result = $this->studentService->getAll();
-        } catch (ModelNotFoundException $e) {
+        } catch (Exception $e) {
             $result = $e;
         }
         return response()->json($result);
@@ -34,7 +34,7 @@ class StudentController extends Controller
 
         try {
             $result = $this->studentService->set($validated);
-        } catch (ModelNotFoundException $e) {
+        } catch (Exception $e) {
             $result = $e;
         }
         return response()->json($result);
@@ -45,7 +45,7 @@ class StudentController extends Controller
     {
         try {
             $result = $this->studentService->del($id);
-        } catch (ModelNotFoundException $e) {
+        } catch (Exception $e) {
             $result = $e;
         }
         return response()->json($result);
@@ -56,8 +56,8 @@ class StudentController extends Controller
     {
         try {
             $result = $this->studentService->info($id);
-        } catch (ModelNotFoundException $e) {
-            $result = '$e';
+        } catch (Exception $e) {
+            $result = $e;
         }
         return response()->json($result);
     }

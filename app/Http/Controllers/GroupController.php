@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\GroupRequest;
 use App\Services\GroupService;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Exception;
 use Illuminate\Http\JsonResponse;
 
 class GroupController extends Controller
@@ -21,7 +21,7 @@ class GroupController extends Controller
     {
         try {
             $result = $this->groupService->getAll();
-        } catch (ModelNotFoundException $e) {
+        } catch (Exception $e) {
             $result = $e;
         }
         return response()->json($result);
@@ -33,7 +33,7 @@ class GroupController extends Controller
         $validated = $request->validated();
         try {
             $result = $this->groupService->set($validated);
-        } catch (ModelNotFoundException $e) {
+        } catch (Exception $e) {
             $result = $e;
         }
         return response()->json($result);
@@ -44,7 +44,7 @@ class GroupController extends Controller
     {
         try {
             $result = $this->groupService->del($id);
-        } catch (ModelNotFoundException $e) {
+        } catch (Exception $e) {
             $result = $e;
         }
         return response()->json($result);
@@ -55,7 +55,7 @@ class GroupController extends Controller
     {
         try {
             $result = $this->groupService->info($id);
-        } catch (ModelNotFoundException $e) {
+        } catch (Exception $e) {
             $result = $e;
         }
         return response()->json($result);

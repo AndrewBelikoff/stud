@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Plan;
 use App\Models\Student;
 use App\Models\Study;
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
 
 class StudentService
@@ -18,16 +19,18 @@ class StudentService
     {
         if (array_key_exists('id', $data) && $student = Student::find($data['id'])) {
             $student->fill($data)->save();
-        } else {
-            $student = Student::updateOrCreate(
+        } elseif (array_key_exists('email', $data)
+            && array_key_exists('name', $data)
+            && array_key_exists('group_id', $data)) {
+            $student = Student::create(
                 [
                     'email' => $data['email'],
-                ],
-                [
                     'name' => $data['name'],
                     'group_id' => $data['group_id'],
                 ]
             );
+        } else {
+            throw new Exception('not enough data');
         };
 
         // удалить старые лекции
